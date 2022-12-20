@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -77,37 +77,71 @@ button {
 
 </style>
 <body>
+  
 
   <textarea id="text"></textarea>
   <button id="botao">Ler Texto</button>
+  
   <p id="result"></p>
+  <p>Total de letras: <span id="letter-count"></span></p>
+  <p>Total de pontos: <span id="period-count"></span></p>
+  <p>Total de virgulas: <span id="comma-count"></span></p>
+  <script>
+    // Obter elementos da página
+    const botao = document.getElementById('botao');
+    const texto = document.getElementById('text');
+   
+
+    const letterCount = document.getElementById('letter-count');
+    const accentCount = document.getElementById('accent-count');
+    const periodCount = document.getElementById('period-count');
+    const commaCount = document.getElementById('comma-count');
+  
+    // Adicionar um evento de clique ao botão
+    botao.addEventListener('click', () => {
+      // Sintetizar a voz com o texto digitado pelo usuário
+      const voz = window.speechSynthesis;
+      const falar = new SpeechSynthesisUtterance(texto.value);
+      voz.speak(falar);
+  
+      // Contar o número de palavras no texto
+      const words = texto.value.split(" ");
+      document.getElementById("result").innerHTML = `Numero de palavras: ${words.length}`;
+  
+      // Inicializar as contagens com zero
+      let letters = 0;
+      let accents = 0;
+      let periods = 0;
+      let commas = 0;
+  
+      // Percorrer cada caractere no texto
+      for (const ch of texto.value) {
+        // Incrementar a contagem de letras se o caractere for uma letra
+        if (ch.match(/[a-zA-Z]/)) {
+          letters++;
+        }
+  
+  
+        // Incrementar a contagem de pontos se o caractere for um ponto
+        if (ch === '.') {
+          periods++;
+        }
+  
+        // Incrementar a contagem de vírgulas se o caractere for uma vírgula
+        if (ch === ',') {
+          commas++;
+        }
+      }
+  
+      // Atualizar os elementos da página com as contagens
+      letterCount.textContent = letters;
+      periodCount.textContent = periods;
+      commaCount.textContent = commas;
 
 
-<script>
-  const botao = document.getElementById('botao');
-const texto = document.getElementById('text');
-
-botao.addEventListener('click', () => {
-  const voz = window.speechSynthesis;
-  const falar = new SpeechSynthesisUtterance(texto.value);
-  voz.speak(falar);
-});
-document.getElementById("botao").addEventListener("click", countWords);
-
-function countWords() {
-  // Obter o texto do campo de entrada
-  var text = document.getElementById("text").value;
-  var words = text.split(" ");
-  if (text == "") {
-    document.getElementById("result").innerHTML = "Numero de palavras:0 "
-  } else {
-     document.getElementById("result").innerHTML = "Numero de palavras: " + words.length;
-  }
-
-}
-
-</script>
-
+    });
+  </script>
 
 </body>
+
 </html>
