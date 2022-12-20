@@ -106,8 +106,11 @@ button {
   
       // Contar o número de palavras no texto
       const words = texto.value.split(" ");
-      document.getElementById("result").innerHTML = `Numero de palavras: ${words.length}`;
-  
+      if (texto.value == "") {
+        document.getElementById("result").innerHTML = `Numero de palavras:0`
+      } else {
+        document.getElementById("result").innerHTML = `Numero de palavras: ${words.length}`;
+      }
       // Inicializar as contagens com zero
       let letters = 0;
       let accents = 0;
